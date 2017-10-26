@@ -1,0 +1,13 @@
+<% include partial/header.ejs %>
+<h1>Mty photo galery</h1>
+
+<a href="/addphoto">Click Here for add more image</a>
+
+<% places.forEach(function(data){ %>
+    <li><%= data.title %></li>
+    <img src="<%= data.image %>" alt="">
+    <li><%= data.description %></li>    
+<% }); %>
+
+<% include partial/footer.ejs %>
+
