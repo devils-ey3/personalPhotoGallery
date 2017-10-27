@@ -1,13 +1,37 @@
 <% include partial/header.ejs %>
-<h1>Mty photo galery</h1>
 
-<a href="/addphoto">Click Here for add more image</a>
+    <div class="container">
+        <header>
+            <div class="jumbotron">
+                <h1>Your Personal Photo Gallery</h1>
+                <a href="/addphoto" class='btn btn-primary'>Click Here for add more image</a>
+            </div>
+        </header>
 
-<% places.forEach(function(data){ %>
-    <li><%= data.title %></li>
-    <img src="<%= data.image %>" alt="">
-    <li><%= data.description %></li>    
-<% }); %>
+        <div class="row">
+            <div class="col-lg-12">
 
-<% include partial/footer.ejs %>
+            </div>
+        </div>
 
+        <div class="row" style="display: flex;flex-wrap: wrap; ">
+            <% places.forEach(function(data){ %>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <h4 class="text-center">
+                        <%= data.title %>
+                    </h4>
+                    <div class="thumbnail">
+                        <img src="<%= data.image %>" alt="">
+                        <div class="caption">
+                            <%= data.description %>
+                        </div>
+                    </div>
+
+                </div>
+
+                <% }); %>
+        </div>
+    </div>
+
+    <% include partial/footer.ejs %>
