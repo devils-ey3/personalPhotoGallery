@@ -4,8 +4,18 @@ app.set("view engine", "ejs");
 app.use(body_parser.urlencoded({
     extended: true
 }));
-var places;
-places = [{
+var mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost/phc",{useMongoClient: true});
+
+var photoSchema = new mongoose.Schema({
+    title:String,
+    image:String,
+    description:String
+});
+
+var PhotoDB = mongoose.model("PhotoDB",photoSchema);
+
+var places = [{
         title: 'shudnrobon',
         image: 'https://i.imgur.com/WtV25d8.jpg',
         description: 'Null'
@@ -65,10 +75,17 @@ app.get('/', function (request, response) {
 });
 
 app.post('/photoAdded', function (request, response) {
-    places.push({
-        title: request.body.title,
-        image: request.body.image,
-        description: request.body.description
+
+    PhotoDB.create({
+    title: request.body.title,
+    image: request.body.image,
+    description: request.body.description
+    },function(err,obj){
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(obj);
+        }
     });
     response.redirect('/');
 });
