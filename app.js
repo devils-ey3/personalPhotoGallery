@@ -15,63 +15,14 @@ var photoSchema = new mongoose.Schema({
 
 var PhotoDB = mongoose.model("PhotoDB",photoSchema);
 
-var places = [{
-        title: 'shudnrobon',
-        image: 'https://i.imgur.com/WtV25d8.jpg',
-        description: 'Null'
-    },
-    {
-        title: 'drug',
-        image: 'https://i.imgur.com/mWROmGo.jpg',
-        description: 'Null'
-    },
-    {
-        title: 'cross',
-        image: 'https://i.imgur.com/fO3Q5K8.jpg',
-        description: 'Null'
-    },
-    {
-        title: 'banana',
-        image: 'https://i.imgur.com/ErxsQ80.jpg',
-        description: 'Null'
-    },
-    {
-        title: 'fish',
-        image: 'https://images.unsplash.com/photo-1485452499676-62ab02c20e83?dpr=1&auto=format&fit=crop&w=767&h=511&q=60&cs=tinysrgb&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
-        description: 'Null'
-    },
-    {
-        title: 'shudnrobon',
-        image: 'https://i.imgur.com/WtV25d8.jpg',
-        description: 'Null'
-    },
-    {
-        title: 'drug',
-        image: 'https://i.imgur.com/mWROmGo.jpg',
-        description: 'Null'
-    },
-    {
-        title: 'cross',
-        image: 'https://i.imgur.com/fO3Q5K8.jpg',
-        description: 'Null'
-    },
-    {
-        title: 'banana',
-        image: 'https://i.imgur.com/ErxsQ80.jpg',
-        description: 'Null'
-    },
-    {
-        title: 'fish',
-        image: 'https://images.unsplash.com/photo-1485452499676-62ab02c20e83?dpr=1&auto=format&fit=crop&w=767&h=511&q=60&cs=tinysrgb&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
-        description: 'Null'
-    },
-    
-];
 
 app.get('/', function (request, response) {
-    response.render('home', {
-        places: places
+    PhotoDB.find({},function(err,obj){
+        response.render('home', {
+            places: obj  
+        });
     });
+    
 });
 
 app.post('/photoAdded', function (request, response) {
