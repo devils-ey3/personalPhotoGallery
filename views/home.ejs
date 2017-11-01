@@ -24,7 +24,17 @@
                     <div class="thumbnail">
                         <img src="<%= data.image %>" alt="">
                         <div class="caption">
-                            <%= data.description %>
+                            <% if (data.description!=='Null'){ %>
+                                <% if (data.description.length>13){ %>
+                                    <p><%= data.description.slice(0,12) %>....</p>
+                                    <div class="text-right"> <a href="/photo/<%= data._id %>">More About</a> </div>                                    
+                                <% }
+                                else {
+                                %>
+                                <p><%= data.description %></p>                                
+                                <% } %>
+
+                            <% } %>                            
                         </div>
                     </div>
 

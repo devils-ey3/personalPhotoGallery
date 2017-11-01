@@ -28,7 +28,11 @@ app.get('/', function (request, response) {
 });
 
 // Create - add new photo
-app.post('/photo/', function (request, response) {
+app.post('/photo', function (request, response) {
+
+    if (request.body.description.trim()===''){
+        request.body.description = 'Null';
+    }
 
     PhotoDB.create({
         title: request.body.title,
@@ -47,6 +51,16 @@ app.get('/photo/add', function (request, response) {
     response.render("addPhoto");
 });
 
+// Show - show broad description of photo
+app.get('/photo/:id',function (request,response) {
+    PhotoDB.findById(request.params.id,function(err,obj){
+        response.render('show',{data:obj});
+        // title
+        // image
+        // description
+    });
+
+});
 
 app.listen(3000, function () {
     require('dns').lookup(require('os').hostname(), function (err, add, fam) {
