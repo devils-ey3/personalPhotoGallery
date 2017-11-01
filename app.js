@@ -1,47 +1,49 @@
 var app = require('express')();
 var body_parser = require('body-parser');
+var mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost/phc", {
+    useMongoClient: true
+});
 app.set("view engine", "ejs");
 app.use(body_parser.urlencoded({
     extended: true
 }));
-var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/phc",{useMongoClient: true});
+
 
 var photoSchema = new mongoose.Schema({
-    title:String,
-    image:String,
-    description:String
+    title: String,
+    image: String,
+    description: String
 });
 
-var PhotoDB = mongoose.model("PhotoDB",photoSchema);
+var PhotoDB = mongoose.model("PhotoDB", photoSchema);
 
-
+// INDEX - show all photo
 app.get('/', function (request, response) {
-    PhotoDB.find({},function(err,obj){
+    PhotoDB.find({}, function (err, obj) {
         response.render('home', {
-            places: obj  
+            places: obj
         });
     });
-    
 });
 
-app.post('/photoAdded', function (request, response) {
+// Create - add new photo
+app.post('/photo/', function (request, response) {
 
     PhotoDB.create({
-    title: request.body.title,
-    image: request.body.image,
-    description: request.body.description
-    },function(err,obj){
+        title: request.body.title,
+        image: request.body.image,
+        description: request.body.description
+    }, function (err, obj) {
         if (err) {
             console.log(err);
-        } else {
-            console.log(obj);
-        }
+        } 
     });
     response.redirect('/');
 });
 
-app.get('/addPhoto', function (request, response) {
+// New - show form for create new photo post
+app.get('/photo/add', function (request, response) {
     response.render("addPhoto");
 });
 
