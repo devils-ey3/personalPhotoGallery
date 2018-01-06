@@ -1,22 +1,18 @@
 var app = require('express')();
 var body_parser = require('body-parser');
 var mongoose = require("mongoose");
+var PhotoDB = require('./models/photo.js');
 mongoose.connect("mongodb://localhost/phc", {
     useMongoClient: true
 });
+
 app.set("view engine", "ejs");
 app.use(body_parser.urlencoded({
     extended: true
 }));
 
 
-var photoSchema = new mongoose.Schema({
-    title: String,
-    image: String,
-    description: String
-});
 
-var PhotoDB = mongoose.model("PhotoDB", photoSchema);
 
 // INDEX - show all photo
 app.get('/', function (request, response) {
