@@ -15,18 +15,25 @@ var data = [{
     title: 'Riuk',
     image: 'https://pm1.narvii.com/5999/40423ac9a7cc498856d4d5aa80e976bdb16d81ab_hq.jpg',
     description: "Mar 3, 2017 - In brief: This tutorial shows you how to download and install f.lux in Ubuntu to use the Night Shift feature in Linux. What's Night Shift? Night Shift is one of the most talked about feature in iOS 9.3. It is a display-based setting that cuts down on blue light exposure at night and provides a warm yellow light that's ..."
-},
+},]
 
-]
-
-var comments = {
-    comment:"Kira is a nyc guy",
-    author:"Abid"
-}
-
+var photoComment = 
+    {
+        text:"Kira is a nyc guy",
+        author:"Abid"
+    };
 
 function cleanUp(params) {
-    Comment.remove({});
+    
+    
+    Comment.remove({},function(err,result){
+        if (err){
+            console.log(err);
+        }
+        else {
+            console.log('comment remove');
+        }
+    });
     PhotoDB.remove({},function(err,result){
 
         if (err){
@@ -40,15 +47,17 @@ function cleanUp(params) {
                         console.log(err);
                     }
                     else{
-                        console.log('Added photo');
-                        Comment.create(comments,function(err,c){
+                        Comment.create(photoComment,function(err,comment){
                             if (err){
                                 console.log(err);
                             }
-                            else {
-                                console.log(c);
+                            else{
+                                output.comments.push(comment);
+                                output.save();
+                                console.log('photo added');
                             }
-                        });
+                            
+                        })
                     }
                 });
             });

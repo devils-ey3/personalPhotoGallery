@@ -1,9 +1,10 @@
 var app = require('express')();
 var body_parser = require('body-parser');
+
 var mongoose = require("mongoose");
 var PhotoDB = require('./models/photo.js');
 var seedDB = require('./seedDB');
-
+mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/phc", {
     useMongoClient: true
 });
@@ -51,11 +52,20 @@ app.get('/photo/add', function (request, response) {
 
 // Show - show broad description of photo
 app.get('/photo/:id',function (request,response) {
-    PhotoDB.findById(request.params.id,function(err,obj){
-        response.render('show',{data:obj});
+    console.log(request.params.id);
+    PhotoDB.findById(request.params.id).populate('comments').exec(function(err,obj){
+        if (err){
+            console.log(err);
+        }
+        else{
+            console.log(obj);
+            response.render('show',{data:obj});
+        }
         // title
         // image
         // description
+        // AUTHOR
+        // COMMENTS
     });
 
 });
