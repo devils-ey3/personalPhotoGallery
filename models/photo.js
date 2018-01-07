@@ -6,6 +6,4 @@ var photoSchema = new mongoose.Schema({
     description: String
 });
 
-var PhotoDB = mongoose.model("PhotoDB", photoSchema);
-
-module.exports = PhotoDB;
+module.exports =  mongoose.model("PhotoDB", photoSchema);

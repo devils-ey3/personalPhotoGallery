@@ -2,6 +2,8 @@ var app = require('express')();
 var body_parser = require('body-parser');
 var mongoose = require("mongoose");
 var PhotoDB = require('./models/photo.js');
+var seedDB = require('./seedDB');
+
 mongoose.connect("mongodb://localhost/phc", {
     useMongoClient: true
 });
@@ -11,7 +13,7 @@ app.use(body_parser.urlencoded({
     extended: true
 }));
 
-
+seedDB();
 
 
 // INDEX - show all photo
