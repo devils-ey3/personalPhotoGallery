@@ -20,7 +20,7 @@ seedDB();
 // INDEX - show all photo
 app.get('/', function (request, response) {
     PhotoDB.find({}, function (err, obj) {
-        response.render('home', {
+        response.render('photo/home', {
             places: obj
         });
     });
@@ -47,7 +47,7 @@ app.post('/photo', function (request, response) {
 
 // New - show form for create new photo post
 app.get('/photo/add', function (request, response) {
-    response.render("addPhoto");
+    response.render("photo/addPhoto");
 });
 
 // Show - show broad description of photo
@@ -59,7 +59,7 @@ app.get('/photo/:id',function (request,response) {
         }
         else{
             console.log(obj);
-            response.render('show',{data:obj});
+            response.render('photo/show',{data:obj});
         }
         // title
         // image
@@ -69,6 +69,15 @@ app.get('/photo/:id',function (request,response) {
     });
 
 });
+
+// ============= COMMENT SECTION =============
+
+// create new comment
+
+app.get('/photo/:id/comment/create',function(request,response){
+    response.render('comments/addComment');
+});
+
 
 app.listen(3000, function () {
     require('dns').lookup(require('os').hostname(), function (err, add, fam) {
