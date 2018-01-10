@@ -14,7 +14,7 @@ app.use(body_parser.urlencoded({
     extended: true
 }));
 
-seedDB();
+// seedDB();
 
 
 // INDEX - show all photo
@@ -74,8 +74,15 @@ app.get('/photo/:id',function (request,response) {
 
 // create new comment
 
-app.get('/photo/:id/comment/create',function(request,response){
-    response.render('comments/addComment');
+app.get('/photo/:id/comment/new',function(request,response){
+    PhotoDB.findById(request.params.id,function(err,photo){
+        if (err){
+            console.log(err);
+        }
+        else{
+            response.render('comments/addComment',{photo:photo});
+        }
+    })
 });
 
 
