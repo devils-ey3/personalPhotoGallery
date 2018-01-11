@@ -4,6 +4,7 @@ var body_parser = require('body-parser');
 var mongoose = require("mongoose");
 var PhotoDB = require('./models/photo.js');
 var seedDB = require('./seedDB');
+var Comment = require('./models/comment')
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/phc", {
     useMongoClient: true
@@ -14,7 +15,7 @@ app.use(body_parser.urlencoded({
     extended: true
 }));
 
-// seedDB();
+//seedDB();
 
 
 // INDEX - show all photo
@@ -52,13 +53,11 @@ app.get('/photo/add', function (request, response) {
 
 // Show - show broad description of photo
 app.get('/photo/:id',function (request,response) {
-    console.log(request.params.id);
     PhotoDB.findById(request.params.id).populate('comments').exec(function(err,obj){
         if (err){
             console.log(err);
         }
         else{
-            console.log(obj);
             response.render('photo/show',{data:obj});
         }
         // title
@@ -74,7 +73,7 @@ app.get('/photo/:id',function (request,response) {
 
 // create new comment
 
-app.get('/photo/:id/comment/new',function(request,response){
+app.get('/photo/:id/comments/new',function(request,response){
     PhotoDB.findById(request.params.id,function(err,photo){
         if (err){
             console.log(err);
@@ -84,6 +83,29 @@ app.get('/photo/:id/comment/new',function(request,response){
         }
     })
 });
+
+app.post('/photo/:id/comments',function(request,response){
+    PhotoDB.findById(request.params.id,function(err,photoInfo){
+        if (err){
+            console.log(err);
+        }
+        else{
+            Comment.create(request.body.comment,function(err,comment){
+                if (err){
+                    console.log(err);
+                }
+                else{
+                    photoInfo.comments.push(comment);
+                    photoInfo.save();
+                    response.redirect('/photo/'+request.params.id);
+
+                }
+            });
+        }
+    });
+
+});
+
 
 
 app.listen(3000, function () {

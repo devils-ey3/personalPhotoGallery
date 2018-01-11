@@ -5,10 +5,14 @@
 <div class="thumbnail">
         <img class="img-responsive" src="<%= data.image %>" alt="">
 </div>
-        <p><%= data.description %></p>  
+        <p><%= data.description %></p>  <br>
+
+        <a href="/photo/<%= data.id %>/comments/new" class="btn btn-primary" role="button">Add comment</a>
+
+        <br>
 
         <p><% data.comments.forEach(function(paran){ %>
-                <strong><%= paran.author %></strong> - <%= paran.text %>
+                <strong><%= paran.author %></strong> - <%= paran.text %><br>
         <% }); %>
-        </p>  
+        </p> 
 <% include ../partial/footer.ejs %>
