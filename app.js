@@ -1,10 +1,13 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var body_parser = require('body-parser');
 
 var mongoose = require("mongoose");
 var PhotoDB = require('./models/photo.js');
 var seedDB = require('./seedDB');
-var Comment = require('./models/comment')
+var Comment = require('./models/comment');
+app.use(express.static(__dirname+'/public'));
+
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/phc", {
     useMongoClient: true

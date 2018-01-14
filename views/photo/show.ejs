@@ -1,18 +1,51 @@
 <% include ../partial/header.ejs %>
-<h4 class="text-center">
-        <%= data.title %>
-    </h4>
-<div class="thumbnail">
-        <img class="img-responsive" src="<%= data.image %>" alt="">
-</div>
-        <p><%= data.description %></p>  <br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="lead">Photo Gallery</div>
+				<div class="list-group">
+					<li class="list-group-item">Item 1</li>
+					<li class="list-group-item">Item 2</li>
+					<li class="list-group-item">Item 3</li>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div class="thumbnail">
+					<img class="img-responsive" src="<%= data.image %>" alt="">
+					<div class="caption-full">
+						<div class="pull-right">
+							Quote
+						</div>
+						<h4>
+							<%= data.title %>
+						</h4>
+						<p>
+							<%= data.description %>
+						</p>
+					</div>
+				</div>
+				<div class="well">
+					<div class="text-right">
+						<a href="/photo/<%= data.id %>/comments/new" class="btn btn-success" role="button">Add comment</a>
+					</div>
+					<hr>
+					<% data.comments.forEach(function(comment){ %>
+						<div class="row">
+							<div class="col-md-12">
+								<%= comment.author %>
+									<span class="pull-right">10 days ago</span>
+									<p>
+										<%= comment.text %>
+									</p>
+							</div>
+						</div>
 
-        <a href="/photo/<%= data.id %>/comments/new" class="btn btn-primary" role="button">Add comment</a>
+						<% }); %>
+				</div>
 
-        <br>
+			</div>
+		</div>
 
-        <p><% data.comments.forEach(function(paran){ %>
-                <strong><%= paran.author %></strong> - <%= paran.text %><br>
-        <% }); %>
-        </p> 
-<% include ../partial/footer.ejs %>
+	</div>
+
+	<% include ../partial/footer.ejs %>
