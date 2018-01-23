@@ -18,15 +18,21 @@
             </div>
             <div class="collapse navbar-collapse">
                 <div class="nav navbar-nav navbar-right">
+                    <% if (!authUser) {%>
                     <li>
-                        <a href="">Login</a>
+                        <a href="/login">Login</a>
                     </li>
                     <li>
-                        <a href="">Signup</a>
+                        <a href="/register">Signup</a>
+                    </li>
+                    <%} else {%>
+                    <li>
+                        <a href="#">Signed as <%= authUser.username %></a>
                     </li>
                     <li>
-                        <a href="">Logout</a>
+                        <a href="/logout">Logout</a>
                     </li>
+                    <%}%>
                 </div>
             </div>
         </div>
