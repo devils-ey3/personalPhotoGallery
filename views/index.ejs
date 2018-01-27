@@ -6,7 +6,35 @@
                 <h1>Your Personal Photo Gallery</h1>
                 <a href="/photo/add" class='btn btn-primary'>Click Here for add more image</a>
             </div>
+            <div class="row" style="display: flex;flex-wrap: wrap; ">
+                <% places.forEach(function(data){ %>
+    
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <h4 class="text-center">
+                            <%= data.title %>
+                        </h4>
+                        <div class="thumbnail img-thubnail" width="304" height="236">
+                            <img src="<%= data.image %>" alt="">
+                            <div class="caption">
+                                <% if (data.description!=='Null'){ %>
+                                    <% if (data.description.length>13){ %>
+                                        <p><%= data.description.slice(0,12) %>....</p>
+                                        <div class="text-right"> <a href="/photo/<%= data._id %>">More About</a> </div>                                    
+                                    <% }
+                                    else {
+                                    %>
+                                    <p><%= data.description %></p>                                
+                                    <% } %>
+    
+                                <% } %>                            
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                    <% }); %>
+            </div>
         </header>
+    
 
-
-    <% include ./partial/footer.ejs %>
+<% include ./partial/footer.ejs %>
