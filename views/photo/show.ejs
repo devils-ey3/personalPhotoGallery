@@ -14,13 +14,16 @@
 					<img class="img-responsive" src="<%= data.image %>" alt="">
 					<div class="caption-full">
 						<div class="pull-right">
-							Quote
+							Something to say
 						</div>
 						<h4>
 							<%= data.title %>
 						</h4>
 						<p>
 							<%= data.description %>
+						</p>
+						<p>
+							<em>Submitted by : <%= data.author.username %></em>
 						</p>
 					</div>
 				</div>
@@ -32,11 +35,12 @@
 					<% data.comments.forEach(function(comment){ %>
 						<div class="row">
 							<div class="col-md-12">
-								<%= comment.author %>
+								<%= comment.author.username %>
 									<span class="pull-right">10 days ago</span>
 									<p>
 										<%= comment.text %>
 									</p>
+									<p></p>
 							</div>
 						</div>
 

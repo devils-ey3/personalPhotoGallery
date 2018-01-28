@@ -38,7 +38,7 @@ app.use(passport.session());
 passport.use(new localStrategy(User.authenticate())); // User.autheicated come from users plugin
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-//seedDB();
+// seedDB();
 
 // Send authUser with every response which is rendered
 app.use(function(request,response,next){

@@ -41,26 +41,26 @@ function cleanUp(params) {
         }
         else {
             console.log('Removed photo');
-            data.forEach(function(seed){
-                PhotoDB.create(seed,function(err,output){
-                    if (err){
-                        console.log(err);
-                    }
-                    else{
-                        Comment.create(photoComment,function(err,comment){
-                            if (err){
-                                console.log(err);
-                            }
-                            else{
-                                output.comments.push(comment);
-                                output.save();
-                                console.log('photo added');
-                            }
+            // data.forEach(function(seed){
+            //     PhotoDB.create(seed,function(err,output){
+            //         if (err){
+            //             console.log(err);
+            //         }
+            //         else{
+            //             Comment.create(photoComment,function(err,comment){
+            //                 if (err){
+            //                     console.log(err);
+            //                 }
+            //                 else{
+            //                     output.comments.push(comment);
+            //                     output.save();
+            //                     console.log('photo added');
+            //                 }
                             
-                        })
-                    }
-                });
-            });
+            //             })
+            //         }
+            //     });
+            // });
         
         }
     });

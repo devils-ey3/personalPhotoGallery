@@ -30,8 +30,12 @@ router.post('/',isLoggedIn,function(request,response){
                     console.log(err);
                 }
                 else{
+                    comment.author.id = request.user._id;
+                    comment.author.username = request.user.username;
+                    comment.save();
                     photoInfo.comments.push(comment);
                     photoInfo.save();
+                    console.log(comment);
                     response.redirect('/photo/'+request.params.id);
                 }
             });

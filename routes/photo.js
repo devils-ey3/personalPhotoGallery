@@ -14,16 +14,19 @@ router.get('/', function (request, response) {
 });
 
 // Create - add new photo
-router.post('/', function (request, response) {
+router.post('/',isLoggedIn, function (request, response) {
 
     if (request.body.description.trim()===''){
         request.body.description = 'Null';
     }
-
     PhotoDB.create({
         title: request.body.title,
         image: request.body.image,
-        description: request.body.description
+        description: request.body.description,
+        author:{
+            id:request.user._id,
+            username:request.user.username
+        },
     }, function (err, obj) {
         if (err) {
             console.log(err);
