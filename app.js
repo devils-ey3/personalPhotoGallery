@@ -4,6 +4,7 @@ var body_parser = require('body-parser');
 var passport = require('passport');
 var localStrategy = require('passport-local');
 var mongoose = require("mongoose");
+var methodOverride = require('method-override');
 var PhotoDB = require('./models/photo');
 var seedDB = require('./seedDB');
 var Comment = require('./models/comment');
@@ -19,11 +20,12 @@ mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/phc", {
     useMongoClient: true
 });
- 
+
 app.set("view engine", "ejs");
 app.use(body_parser.urlencoded({
     extended: true
 }));
+app.use(methodOverride('_method'));
 
 app.use(require('express-session')({
     secret:"Damish",

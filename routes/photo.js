@@ -58,6 +58,42 @@ router.get('/:id',function (request,response) {
 
 });
 
+// EDIT route
+router.get('/:id/edit',function(request,response){
+    PhotoDB.findById(request.params.id,function(err,data){
+        if (err){
+            console.log(err);
+        }
+        else {
+            response.render('photo/edit',{data:data});
+        }
+    });
+});
+
+// UPDATE route
+router.put("/:id",function(request,response){
+    PhotoDB.findByIdAndUpdate(request.params.id,request.body.photo,function(err,status){
+        if (err){
+            console.log(err);
+        }
+        else{
+            response.redirect('/photo/'+request.params.id);
+        }
+    });
+});
+
+// Delete route
+router.delete('/:id',function(request,response){
+    PhotoDB.findByIdAndRemove(request.params.id,function(err,status){
+        if (err){
+            console.log(err);
+        }
+        else{
+            response.redirect('/photo');
+        }
+    });
+});
+
 function isLoggedIn(request,response,next){
     if (request.isAuthenticated()){
         return next();
