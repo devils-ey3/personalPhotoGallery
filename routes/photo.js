@@ -59,19 +59,25 @@ router.get('/:id',function (request,response) {
 });
 
 // EDIT route
-router.get('/:id/edit',function(request,response){
-    PhotoDB.findById(request.params.id,function(err,data){
-        if (err){
-            console.log(err);
-        }
-        else {
+router.get('/:id/edit',checkAuthorizationOfPost,function(request,response){
+
+    // Authentication user
+
+   
+        PhotoDB.findById(request.params.id,function(err,data){
+            if (err){
+                console.log(err);
+            }
+           else{
             response.render('photo/edit',{data:data});
-        }
-    });
+           }
+        });
 });
+    
+
 
 // UPDATE route
-router.put("/:id",function(request,response){
+router.put("/:id",checkAuthorizationOfPost,function(request,response){
     PhotoDB.findByIdAndUpdate(request.params.id,request.body.photo,function(err,status){
         if (err){
             console.log(err);
@@ -83,7 +89,7 @@ router.put("/:id",function(request,response){
 });
 
 // Delete route
-router.delete('/:id',function(request,response){
+router.delete('/:id',checkAuthorizationOfPost,function(request,response){
     PhotoDB.findByIdAndRemove(request.params.id,function(err,status){
         if (err){
             console.log(err);
@@ -94,11 +100,38 @@ router.delete('/:id',function(request,response){
     });
 });
 
+// authentication middlewire
 function isLoggedIn(request,response,next){
     if (request.isAuthenticated()){
         return next();
     }
     response.redirect('/login');
 };
+
+// authorization middlewire
+function checkAuthorizationOfPost(request,response,next){
+        // Authentication user
+
+        if (request.isAuthenticated()){
+            PhotoDB.findById(request.params.id,function(err,data){
+                if (err){
+                    response.redirect("back"); // back you where the link is
+                }
+                else {
+                    // authorization user
+                    if (data.author.id.equals(request.user._id)){
+                       next();
+                    }
+                    else{
+                        response.redirect("back");
+                    }
+                }
+            });
+        }
+        else{
+            response.redirect("back");
+        }
+}
+
 
 module.exports = router;

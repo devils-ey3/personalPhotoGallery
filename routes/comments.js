@@ -44,6 +44,10 @@ router.post('/',isLoggedIn,function(request,response){
 
 });
 
+// update comment
+
+
+// delete comment
 
 function isLoggedIn(request,response,next){
     if (request.isAuthenticated()){
