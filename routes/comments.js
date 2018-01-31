@@ -44,10 +44,63 @@ router.post('/',isLoggedIn,function(request,response){
 
 });
 
+// edit comment
+// /photo/:id/comments/:commentID/edit
+router.get('/:commentID/edit',function(request,response){
+    Comment.findById(request.params.commentID,function(err,comment){
+        if (err){
+            console.log(err);
+        }
+        else{
+            response.render('comments/editComment',{postid:request.params.id,comment:comment});
+        }
+    });
+});
+
 // update comment
+router.put('/:commentID',function(request,response){
+    // console.log(request.body.comment.text);
+    // console.log(request.params.commentID);
+    // Comment.findById(request.params.commentID,function(err,result){
+    //     console.log(result);
+    // });
+
+
+    // request.body.comment this should be an object
+    Comment.findByIdAndUpdate(request.params.commentID,request.body.comment,function(err,comment){
+        if (err){
+            console.log('back');
+        }
+        else{
+            response.redirect('/photo/'+request.params.id);
+        }
+    });
+});
 
 
 // delete comment
+
+router.delete('/:commentID',function(request,response){
+    // console.log(request.body.comment.text);
+    // console.log(request.params.commentID);
+    // Comment.findById(request.params.commentID,function(err,result){
+    //     console.log(result);
+    // });
+
+
+    // request.body.comment this should be an object
+    Comment.findByIdAndRemove(request.params.commentID,function(err,comment){
+        if (err){
+            console.log('back');
+        }
+        else{
+            response.redirect('/photo/'+request.params.id);
+        }
+    });
+});
+
+
+
 
 function isLoggedIn(request,response,next){
     if (request.isAuthenticated()){

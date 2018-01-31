@@ -75,7 +75,6 @@ router.get('/:id/edit',checkAuthorizationOfPost,function(request,response){
 });
     
 
-
 // UPDATE route
 router.put("/:id",checkAuthorizationOfPost,function(request,response){
     PhotoDB.findByIdAndUpdate(request.params.id,request.body.photo,function(err,status){
