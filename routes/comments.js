@@ -58,7 +58,7 @@ router.get('/:commentID/edit',function(request,response){
 });
 
 // update comment
-router.put('/:commentID',function(request,response){
+router.put('/:commentID',checkAuthorizationOfComment,function(request,response){
     // console.log(request.body.comment.text);
     // console.log(request.params.commentID);
     // Comment.findById(request.params.commentID,function(err,result){
@@ -79,14 +79,12 @@ router.put('/:commentID',function(request,response){
 
 
 // delete comment
-
-router.delete('/:commentID',function(request,response){
+router.delete('/:commentID',checkAuthorizationOfComment,function(request,response){
     // console.log(request.body.comment.text);
     // console.log(request.params.commentID);
     // Comment.findById(request.params.commentID,function(err,result){
     //     console.log(result);
     // });
-
 
     // request.body.comment this should be an object
     Comment.findByIdAndRemove(request.params.commentID,function(err,comment){
@@ -99,6 +97,30 @@ router.delete('/:commentID',function(request,response){
     });
 });
 
+
+// authorization comment middlewire
+function checkAuthorizationOfComment(request,response,next){
+    // Authentication user
+    if (request.isAuthenticated()){
+        Comment.findById(request.params.commentID,function(err,data){
+            if (err){
+                response.redirect("back"); // back you where the link is
+            }
+            else {
+                // authorization user
+                if (data.author.id.equals(request.user._id)){
+                   next();
+                }
+                else{
+                    response.redirect("back");
+                }
+            }
+        });
+    }
+    else{
+        response.redirect("back");
+    }
+}
 
 
 
